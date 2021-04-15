@@ -1,5 +1,10 @@
 Name: memberdata.rpc
 ListenOn: 127.0.0.1:8080
+Log:
+  ServiceName: cake-mall-api
+  Mode: file
+  Path: /apps/logs/cake-mall-api
+  KeepDays: 30
 Etcd:
   Hosts:
   - 127.0.0.1:2379
