@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	"cake-mall/api/internal/config"
-	"cake-mall/api/internal/public_perform/http"
+	"cake-mall/api/middlerware/http"
 )
 
 type Client struct {

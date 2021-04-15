@@ -14,11 +14,14 @@ import (
 )
 
 type (
+	VerifyUserNumberWithPwdRequest    = member.VerifyUserNumberWithPwdRequest
+	VerifyUserNumberWithPwdResponse   = member.VerifyUserNumberWithPwdResponse
 	UpdateSessionKeyByUnionIdRequest  = member.UpdateSessionKeyByUnionIdRequest
 	UpdateSessionKeyByUnionIdResponse = member.UpdateSessionKeyByUnionIdResponse
 
 	Member interface {
 		UpdateSessionKeyByUnionId(ctx context.Context, in *UpdateSessionKeyByUnionIdRequest) (*UpdateSessionKeyByUnionIdResponse, error)
+		VerifyUserNumberWithPwd(ctx context.Context, in *VerifyUserNumberWithPwdRequest) (*VerifyUserNumberWithPwdResponse, error)
 	}
 
 	defaultMember struct {
@@ -35,4 +38,9 @@ func NewMember(cli zrpc.Client) Member {
 func (m *defaultMember) UpdateSessionKeyByUnionId(ctx context.Context, in *UpdateSessionKeyByUnionIdRequest) (*UpdateSessionKeyByUnionIdResponse, error) {
 	client := member.NewMemberClient(m.cli.Conn())
 	return client.UpdateSessionKeyByUnionId(ctx, in)
+}
+
+func (m *defaultMember) VerifyUserNumberWithPwd(ctx context.Context, in *VerifyUserNumberWithPwdRequest) (*VerifyUserNumberWithPwdResponse, error) {
+	client := member.NewMemberClient(m.cli.Conn())
+	return client.VerifyUserNumberWithPwd(ctx, in)
 }

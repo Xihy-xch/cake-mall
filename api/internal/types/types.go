@@ -10,3 +10,20 @@ type UpdateWechatSessionKeyResponse struct {
 	Msg  string `json:"msg"`
 	Data string `json:"data"`
 }
+
+type LoginRequest struct {
+	UserNumber int64  `form:"userNumber"`
+	Password   string `form:"password"`
+}
+
+type LoginResponse struct {
+	Code int32             `json:"code"`
+	Msg  string            `json:"msg"`
+	Data LoginResponseData `json:"data"`
+}
+
+type LoginResponseData struct {
+	AccessToken  string `json:"access_token"`
+	AccessExpire int64  `json:"access_expire"`
+	RefreshAfter int64  `json:"refresh_after"` // 建议客户端刷新token的绝对时间
+}

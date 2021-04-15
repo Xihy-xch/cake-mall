@@ -8,6 +8,7 @@ import (
 	"cake-mall/rpc/member-data/internal/server"
 	"cake-mall/rpc/member-data/internal/svc"
 	"cake-mall/rpc/member-data/member"
+	"cake-mall/rpc/unary_interceptors"
 
 	"github.com/tal-tech/go-zero/core/conf"
 	"github.com/tal-tech/go-zero/zrpc"
@@ -29,6 +30,7 @@ func main() {
 		reflection.Register(grpcServer)
 		member.RegisterMemberServer(grpcServer, srv)
 	})
+	s.AddUnaryInterceptors(unary_interceptors.UnaryLogInterceptor())
 	defer s.Stop()
 
 	fmt.Printf("Starting rpc server at %s...\n", c.ListenOn)

@@ -8,13 +8,19 @@ import (
 
 type Config struct {
 	rest.RestConf
-	Log    logx.LogConf
-	Member zrpc.RpcClientConf
-	Wechat WechatConfig
+	Log     logx.LogConf
+	Member  zrpc.RpcClientConf `json:"member"`
+	Wechat  WechatConfig
+	JwtAuth JwtAuth
 }
 
 type WechatConfig struct {
 	AppID     string `json:"AppID"`
 	AppSecret string `json:"AppSecret"`
 	Host      string `json:"Host"`
+}
+
+type JwtAuth struct {
+	AccessSecret string `json:"AccessSecret"`
+	AccessExpire int64  `json:"AccessExpire"`
 }

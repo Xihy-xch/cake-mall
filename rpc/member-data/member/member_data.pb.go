@@ -6,11 +6,12 @@ package member
 import (
 	context "context"
 	fmt "fmt"
+	math "math"
+
 	proto "github.com/golang/protobuf/proto"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
-	math "math"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -102,25 +103,119 @@ func (m *UpdateSessionKeyByUnionIdResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_UpdateSessionKeyByUnionIdResponse proto.InternalMessageInfo
 
+type VerifyUserNumberWithPwdRequest struct {
+	UserNumber           int64    `protobuf:"varint,1,opt,name=userNumber,proto3" json:"userNumber,omitempty"`
+	Password             string   `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *VerifyUserNumberWithPwdRequest) Reset()         { *m = VerifyUserNumberWithPwdRequest{} }
+func (m *VerifyUserNumberWithPwdRequest) String() string { return proto.CompactTextString(m) }
+func (*VerifyUserNumberWithPwdRequest) ProtoMessage()    {}
+func (*VerifyUserNumberWithPwdRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_4010a41aeb367e84, []int{2}
+}
+
+func (m *VerifyUserNumberWithPwdRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_VerifyUserNumberWithPwdRequest.Unmarshal(m, b)
+}
+func (m *VerifyUserNumberWithPwdRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_VerifyUserNumberWithPwdRequest.Marshal(b, m, deterministic)
+}
+func (m *VerifyUserNumberWithPwdRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_VerifyUserNumberWithPwdRequest.Merge(m, src)
+}
+func (m *VerifyUserNumberWithPwdRequest) XXX_Size() int {
+	return xxx_messageInfo_VerifyUserNumberWithPwdRequest.Size(m)
+}
+func (m *VerifyUserNumberWithPwdRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_VerifyUserNumberWithPwdRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_VerifyUserNumberWithPwdRequest proto.InternalMessageInfo
+
+func (m *VerifyUserNumberWithPwdRequest) GetUserNumber() int64 {
+	if m != nil {
+		return m.UserNumber
+	}
+	return 0
+}
+
+func (m *VerifyUserNumberWithPwdRequest) GetPassword() string {
+	if m != nil {
+		return m.Password
+	}
+	return ""
+}
+
+type VerifyUserNumberWithPwdResponse struct {
+	Status               int32    `protobuf:"varint,1,opt,name=status,proto3" json:"status,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *VerifyUserNumberWithPwdResponse) Reset()         { *m = VerifyUserNumberWithPwdResponse{} }
+func (m *VerifyUserNumberWithPwdResponse) String() string { return proto.CompactTextString(m) }
+func (*VerifyUserNumberWithPwdResponse) ProtoMessage()    {}
+func (*VerifyUserNumberWithPwdResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_4010a41aeb367e84, []int{3}
+}
+
+func (m *VerifyUserNumberWithPwdResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_VerifyUserNumberWithPwdResponse.Unmarshal(m, b)
+}
+func (m *VerifyUserNumberWithPwdResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_VerifyUserNumberWithPwdResponse.Marshal(b, m, deterministic)
+}
+func (m *VerifyUserNumberWithPwdResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_VerifyUserNumberWithPwdResponse.Merge(m, src)
+}
+func (m *VerifyUserNumberWithPwdResponse) XXX_Size() int {
+	return xxx_messageInfo_VerifyUserNumberWithPwdResponse.Size(m)
+}
+func (m *VerifyUserNumberWithPwdResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_VerifyUserNumberWithPwdResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_VerifyUserNumberWithPwdResponse proto.InternalMessageInfo
+
+func (m *VerifyUserNumberWithPwdResponse) GetStatus() int32 {
+	if m != nil {
+		return m.Status
+	}
+	return 0
+}
+
 func init() {
 	proto.RegisterType((*UpdateSessionKeyByUnionIdRequest)(nil), "member.updateSessionKeyByUnionIdRequest")
 	proto.RegisterType((*UpdateSessionKeyByUnionIdResponse)(nil), "member.updateSessionKeyByUnionIdResponse")
+	proto.RegisterType((*VerifyUserNumberWithPwdRequest)(nil), "member.verifyUserNumberWithPwdRequest")
+	proto.RegisterType((*VerifyUserNumberWithPwdResponse)(nil), "member.verifyUserNumberWithPwdResponse")
 }
 
 func init() { proto.RegisterFile("member_data.proto", fileDescriptor_4010a41aeb367e84) }
 
 var fileDescriptor_4010a41aeb367e84 = []byte{
-	// 156 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x12, 0xcc, 0x4d, 0xcd, 0x4d,
-	0x4a, 0x2d, 0x8a, 0x4f, 0x49, 0x2c, 0x49, 0xd4, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x62, 0x83,
-	0x08, 0x29, 0xc5, 0x70, 0x29, 0x94, 0x16, 0xa4, 0x24, 0x96, 0xa4, 0x06, 0xa7, 0x16, 0x17, 0x67,
-	0xe6, 0xe7, 0x79, 0xa7, 0x56, 0x3a, 0x55, 0x86, 0xe6, 0x65, 0xe6, 0xe7, 0x79, 0xa6, 0x04, 0xa5,
-	0x16, 0x96, 0xa6, 0x16, 0x97, 0x08, 0x49, 0x70, 0xb1, 0x97, 0x42, 0x44, 0x24, 0x18, 0x15, 0x18,
-	0x35, 0x38, 0x83, 0x60, 0x5c, 0x21, 0x39, 0x2e, 0xae, 0x62, 0xb8, 0x3e, 0x09, 0x26, 0xb0, 0x24,
-	0x92, 0x88, 0x92, 0x32, 0x97, 0x22, 0x1e, 0xd3, 0x8b, 0x0b, 0xf2, 0xf3, 0x8a, 0x53, 0x8d, 0xaa,
-	0xb8, 0xa0, 0x8e, 0x11, 0x2a, 0xe0, 0x92, 0xc4, 0xa9, 0x5c, 0x48, 0x43, 0x0f, 0xa2, 0x4a, 0x8f,
-	0x90, 0x7b, 0xa5, 0x34, 0x89, 0x50, 0x09, 0xb1, 0x3b, 0x89, 0x0d, 0x1c, 0x1a, 0xc6, 0x80, 0x00,
-	0x00, 0x00, 0xff, 0xff, 0xb5, 0xef, 0xb7, 0xee, 0x22, 0x01, 0x00, 0x00,
+	// 254 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x92, 0x41, 0x4b, 0xc4, 0x30,
+	0x10, 0x85, 0xa9, 0x62, 0xd5, 0xb9, 0x39, 0x07, 0xad, 0x3d, 0xd4, 0xb5, 0x82, 0xae, 0x97, 0x1e,
+	0xf4, 0xe4, 0xd5, 0x9b, 0x08, 0x22, 0x95, 0xc5, 0xcb, 0x82, 0x64, 0xe9, 0x88, 0x15, 0xb6, 0x89,
+	0x99, 0xc4, 0xa5, 0x7f, 0xd8, 0xdf, 0x21, 0x26, 0xd9, 0xb0, 0x97, 0x6e, 0x3d, 0xce, 0x9b, 0x97,
+	0x97, 0x2f, 0x8f, 0xc0, 0xd1, 0x92, 0x96, 0x0b, 0xd2, 0x6f, 0x8d, 0x30, 0xa2, 0x52, 0x5a, 0x1a,
+	0x89, 0xa9, 0x97, 0xca, 0x39, 0x4c, 0xac, 0x6a, 0x84, 0xa1, 0x17, 0x62, 0x6e, 0x65, 0xf7, 0x48,
+	0xfd, 0x7d, 0x3f, 0xeb, 0x5a, 0xd9, 0x3d, 0x34, 0x35, 0x7d, 0x59, 0x62, 0x83, 0x19, 0xec, 0x5b,
+	0xaf, 0x64, 0xc9, 0x24, 0x99, 0x1e, 0xd6, 0xeb, 0x11, 0x0b, 0x00, 0x8e, 0xe7, 0xb2, 0x1d, 0xb7,
+	0xdc, 0x50, 0xca, 0x0b, 0x38, 0xdf, 0x92, 0xce, 0x4a, 0x76, 0x4c, 0xe5, 0x1c, 0x8a, 0x6f, 0xd2,
+	0xed, 0x7b, 0x3f, 0x63, 0xd2, 0x4f, 0xf6, 0x0f, 0xeb, 0xb5, 0x35, 0x1f, 0xcf, 0xab, 0x08, 0x50,
+	0x00, 0xd8, 0xb8, 0x73, 0x0c, 0xbb, 0xf5, 0x86, 0x82, 0x39, 0x1c, 0x28, 0xc1, 0xbc, 0x92, 0xba,
+	0x09, 0x10, 0x71, 0x2e, 0xef, 0xe0, 0x6c, 0x30, 0xdd, 0x03, 0xe0, 0x31, 0xa4, 0x6c, 0x84, 0xb1,
+	0xec, 0xa2, 0xf7, 0xea, 0x30, 0xdd, 0xfc, 0x24, 0x10, 0x6a, 0x42, 0x05, 0xa7, 0x83, 0x0f, 0xc1,
+	0x69, 0xe5, 0x5d, 0xd5, 0x58, 0x93, 0xf9, 0xf5, 0x3f, 0x9c, 0x01, 0xea, 0x13, 0x4e, 0x06, 0xb8,
+	0xf1, 0x72, 0x9d, 0xb2, 0xbd, 0xb6, 0xfc, 0x6a, 0xd4, 0xe7, 0xef, 0x5a, 0xa4, 0xee, 0x4f, 0xdc,
+	0xfe, 0x06, 0x00, 0x00, 0xff, 0xff, 0x08, 0x90, 0x53, 0xfd, 0x28, 0x02, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -136,6 +231,7 @@ const _ = grpc.SupportPackageIsVersion4
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type MemberClient interface {
 	UpdateSessionKeyByUnionId(ctx context.Context, in *UpdateSessionKeyByUnionIdRequest, opts ...grpc.CallOption) (*UpdateSessionKeyByUnionIdResponse, error)
+	VerifyUserNumberWithPwd(ctx context.Context, in *VerifyUserNumberWithPwdRequest, opts ...grpc.CallOption) (*VerifyUserNumberWithPwdResponse, error)
 }
 
 type memberClient struct {
@@ -155,9 +251,19 @@ func (c *memberClient) UpdateSessionKeyByUnionId(ctx context.Context, in *Update
 	return out, nil
 }
 
+func (c *memberClient) VerifyUserNumberWithPwd(ctx context.Context, in *VerifyUserNumberWithPwdRequest, opts ...grpc.CallOption) (*VerifyUserNumberWithPwdResponse, error) {
+	out := new(VerifyUserNumberWithPwdResponse)
+	err := c.cc.Invoke(ctx, "/member.member/verifyUserNumberWithPwd", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MemberServer is the server API for Member service.
 type MemberServer interface {
 	UpdateSessionKeyByUnionId(context.Context, *UpdateSessionKeyByUnionIdRequest) (*UpdateSessionKeyByUnionIdResponse, error)
+	VerifyUserNumberWithPwd(context.Context, *VerifyUserNumberWithPwdRequest) (*VerifyUserNumberWithPwdResponse, error)
 }
 
 // UnimplementedMemberServer can be embedded to have forward compatible implementations.
@@ -166,6 +272,9 @@ type UnimplementedMemberServer struct {
 
 func (*UnimplementedMemberServer) UpdateSessionKeyByUnionId(ctx context.Context, req *UpdateSessionKeyByUnionIdRequest) (*UpdateSessionKeyByUnionIdResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateSessionKeyByUnionId not implemented")
+}
+func (*UnimplementedMemberServer) VerifyUserNumberWithPwd(ctx context.Context, req *VerifyUserNumberWithPwdRequest) (*VerifyUserNumberWithPwdResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method VerifyUserNumberWithPwd not implemented")
 }
 
 func RegisterMemberServer(s *grpc.Server, srv MemberServer) {
@@ -190,6 +299,24 @@ func _Member_UpdateSessionKeyByUnionId_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Member_VerifyUserNumberWithPwd_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(VerifyUserNumberWithPwdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MemberServer).VerifyUserNumberWithPwd(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/member.member/VerifyUserNumberWithPwd",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MemberServer).VerifyUserNumberWithPwd(ctx, req.(*VerifyUserNumberWithPwdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Member_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "member.member",
 	HandlerType: (*MemberServer)(nil),
@@ -197,6 +324,10 @@ var _Member_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "updateSessionKeyByUnionId",
 			Handler:    _Member_UpdateSessionKeyByUnionId_Handler,
+		},
+		{
+			MethodName: "verifyUserNumberWithPwd",
+			Handler:    _Member_VerifyUserNumberWithPwd_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

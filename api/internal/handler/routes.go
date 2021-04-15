@@ -17,6 +17,11 @@ func RegisterHandlers(engine *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/members/updateWechatSessionKey",
 				Handler: updateWechatSessionKeyHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/members/login",
+				Handler: LoginHandler(serverCtx),
+			},
 		},
 	)
 }

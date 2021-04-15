@@ -25,3 +25,8 @@ func (s *MemberServer) UpdateSessionKeyByUnionId(ctx context.Context, in *member
 	l := logic.NewUpdateSessionKeyByUnionIdLogic(ctx, s.svcCtx)
 	return l.UpdateSessionKeyByUnionId(in)
 }
+
+func (s *MemberServer) VerifyUserNumberWithPwd(ctx context.Context, in *member.VerifyUserNumberWithPwdRequest) (*member.VerifyUserNumberWithPwdResponse, error) {
+	l := logic.NewVerifyUserNumberWithPwdLogic(ctx, s.svcCtx)
+	return l.VerifyUserNumberWithPwd(in)
+}

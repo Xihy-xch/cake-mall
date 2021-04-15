@@ -28,7 +28,7 @@ func (l LogDoer) Do(req *http.Request) (*http.Response, error) {
 
 
 
-	logx.WithContext(req.Context()).Infof("发送请求, method: %s, url: %s, params: %s", req.Method, req.URL.String(), bytes2str(reqBody))
+	logx.WithContext(req.Context()).Infof("发送请求[HTTP]: [method: %s, url: %s, params: %s]", req.Method, req.URL.String(), bytes2str(reqBody))
 
 	resp, respErr := l.doer.Do(req)
 
@@ -52,7 +52,7 @@ func (l LogDoer) Do(req *http.Request) (*http.Response, error) {
 		level = "nil"
 	}
 
-	logx.WithContext(req.Context()).Infof("level: %s 接收响应, method: %s, url: %s, resp: %s", level, req.Method, req.URL.String(), bytes2str(respBody))
+	logx.WithContext(req.Context()).Infof("接收响应[HTTP]:[level: %s, method: %s, url: %s, resp: %s]", level, req.Method, req.URL.String(), bytes2str(respBody))
 	if respErr != nil {
 		return nil, respErr
 	}
