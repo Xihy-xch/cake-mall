@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package member;
+
+
+service member {
+  rpc updateSessionKeyByUnionId (updateSessionKeyByUnionIdRequest) returns (updateSessionKeyByUnionIdResponse);
+}
+
+message updateSessionKeyByUnionIdRequest {
+  string unionId    = 1;
+  string sessionKey = 2;
+}
+
+message updateSessionKeyByUnionIdResponse {
+
+}

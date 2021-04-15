@@ -1,0 +1,29 @@
+syntax = "v1"
+
+info(
+	title: "cake-mall-api"
+	desc: "蛋糕商城api网关"
+	author: "xingchanghao"
+	email: "335013385@qq.com"
+)
+
+type (
+	updateWechatSessionKeyRequest {
+		JsCode string `form:"jscode"`
+	}
+
+	updateWechatSessionKeyResponse {
+		Code int32                              `json:"code"`
+		Msg  string                             `json:"msg"`
+		Data UpdateWechatSessionKeyResponseData `json:"data"`
+	}
+
+	UpdateWechatSessionKeyResponseData {
+		LoginStat int16 `json:"loginStat"`
+	}
+)
+
+service cake_mall_api {
+	@handler updateWechatSessionKeyHandler
+	get /members/updateWechatSessionKey (updateWechatSessionKeyRequest) returns (updateWechatSessionKeyResponse)
+}

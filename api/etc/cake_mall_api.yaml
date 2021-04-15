@@ -1,0 +1,13 @@
+Name: cake_mall_api
+Host: 0.0.0.0
+Port: 8888
+Verbose: true
+Log:
+  ServiceName: cake-mall-api
+  Mode: file
+  Path: /apps/logs/cake-mall-api
+  KeepDays: 30
+Wechat:
+  Host: https://api.weixin.qq.com
+  AppID: wxe0679df260670719
+  AppSecret: 1f61870dc7fcc275e76f0ae8a0dd1909
