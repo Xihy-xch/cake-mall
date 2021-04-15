@@ -7,6 +7,11 @@ Log:
   Mode: file
   Path: /apps/logs/cake-mall-api
   KeepDays: 30
+member:
+  Etcd:
+    Hosts:
+      - 127.0.0.1:2379
+    Key: memberdata.rpc
 Wechat:
   Host: https://api.weixin.qq.com
   AppID: wxe0679df260670719

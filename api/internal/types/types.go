@@ -6,11 +6,7 @@ type UpdateWechatSessionKeyRequest struct {
 }
 
 type UpdateWechatSessionKeyResponse struct {
-	Code int32                              `json:"code"`
-	Msg  string                             `json:"msg"`
-	Data UpdateWechatSessionKeyResponseData `json:"data"`
-}
-
-type UpdateWechatSessionKeyResponseData struct {
-	LoginStat int16 `json:"loginStat"`
+	Code int32  `json:"code"`
+	Msg  string `json:"msg"`
+	Data string `json:"data"`
 }
