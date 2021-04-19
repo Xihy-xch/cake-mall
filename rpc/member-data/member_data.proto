@@ -6,6 +6,7 @@ package member ;
 service member {
   rpc updateSessionKeyByUnionId (updateSessionKeyByUnionIdRequest) returns (updateSessionKeyByUnionIdResponse);
   rpc verifyUserNumberWithPwd (verifyUserNumberWithPwdRequest) returns (verifyUserNumberWithPwdResponse);
+  rpc createUser (createUserRequest) returns (createUserResponse);
 }
 
 message updateSessionKeyByUnionIdRequest {
@@ -14,7 +15,6 @@ message updateSessionKeyByUnionIdRequest {
 }
 
 message updateSessionKeyByUnionIdResponse {
-
 }
 
 message verifyUserNumberWithPwdRequest {
@@ -24,4 +24,14 @@ message verifyUserNumberWithPwdRequest {
 
 message verifyUserNumberWithPwdResponse {
   int32 status = 1;
+}
+
+message createUserRequest {
+  int64 userNumber = 1;
+  string password  = 2;
+  string mobile    = 3;
+  string userName  = 4;
+}
+
+message createUserResponse {
 }

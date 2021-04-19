@@ -14,14 +14,17 @@ import (
 )
 
 type (
-	VerifyUserNumberWithPwdRequest    = member.VerifyUserNumberWithPwdRequest
-	VerifyUserNumberWithPwdResponse   = member.VerifyUserNumberWithPwdResponse
+	CreateUserResponse                = member.CreateUserResponse
 	UpdateSessionKeyByUnionIdRequest  = member.UpdateSessionKeyByUnionIdRequest
 	UpdateSessionKeyByUnionIdResponse = member.UpdateSessionKeyByUnionIdResponse
+	VerifyUserNumberWithPwdRequest    = member.VerifyUserNumberWithPwdRequest
+	VerifyUserNumberWithPwdResponse   = member.VerifyUserNumberWithPwdResponse
+	CreateUserRequest                 = member.CreateUserRequest
 
 	Member interface {
 		UpdateSessionKeyByUnionId(ctx context.Context, in *UpdateSessionKeyByUnionIdRequest) (*UpdateSessionKeyByUnionIdResponse, error)
 		VerifyUserNumberWithPwd(ctx context.Context, in *VerifyUserNumberWithPwdRequest) (*VerifyUserNumberWithPwdResponse, error)
+		CreateUser(ctx context.Context, in *CreateUserRequest) (*CreateUserResponse, error)
 	}
 
 	defaultMember struct {
@@ -43,4 +46,9 @@ func (m *defaultMember) UpdateSessionKeyByUnionId(ctx context.Context, in *Updat
 func (m *defaultMember) VerifyUserNumberWithPwd(ctx context.Context, in *VerifyUserNumberWithPwdRequest) (*VerifyUserNumberWithPwdResponse, error) {
 	client := member.NewMemberClient(m.cli.Conn())
 	return client.VerifyUserNumberWithPwd(ctx, in)
+}
+
+func (m *defaultMember) CreateUser(ctx context.Context, in *CreateUserRequest) (*CreateUserResponse, error) {
+	client := member.NewMemberClient(m.cli.Conn())
+	return client.CreateUser(ctx, in)
 }

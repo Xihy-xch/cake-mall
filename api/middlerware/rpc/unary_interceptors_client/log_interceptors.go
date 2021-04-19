@@ -18,10 +18,10 @@ func LogInterceptor(ctx context.Context, method string, req, reply interface{},
 		addr = client.Addr.String()
 	}
 
-	logx.WithContext(ctx).Infof("发送请求[RPC]：[addr: %s - method: %s - req: %s]", addr, method, req)
+	logx.WithContext(ctx).WithDuration(timex.Since(startTime)).Infof("发送请求[RPC]：[addr: %s - method: %s - req: %s]", addr, method, req)
 
 	err := invoker(ctx, method, req, reply, cc, opts...)
 
-	logx.WithContext(ctx).WithDuration(timex.Since(startTime)).Infof("接收响应[RPC]：[addr: %s - method: %s - req: %s]", addr, method, reply)
+	logx.WithContext(ctx).WithDuration(timex.Since(startTime)).Infof("接收响应[RPC]：[addr: %s - method: %s - resp: %s]", addr, method, reply)
 	return err
 }

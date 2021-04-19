@@ -28,8 +28,7 @@ func (l LogDoer) Do(req *http.Request) (*http.Response, error) {
 	}
 	startTime := timex.Now()
 
-
-	logx.WithContext(req.Context()).WithDuration(timex.Since(startTime)).Infof("发送请求[HTTP]: [method: %s, url: %s, params: %s]", req.Method, req.URL.String(), bytes2str(reqBody))
+	logx.WithContext(req.Context()).WithDuration(timex.Since(startTime)).Infof("发送请求[HTTP]: [method: %s, url: %s, params: %s]", req.Method, req.URL.String(), *(*string)(unsafe.Pointer(&reqBody)))
 
 	resp, respErr := l.doer.Do(req)
 
@@ -43,7 +42,6 @@ func (l LogDoer) Do(req *http.Request) (*http.Response, error) {
 		}
 	}
 
-
 	var level string
 	if resp != nil {
 		var build strings.Builder
@@ -53,18 +51,11 @@ func (l LogDoer) Do(req *http.Request) (*http.Response, error) {
 		level = "nil"
 	}
 
-	logx.WithContext(req.Context()).Infof("接收响应[HTTP]:[level: %s, method: %s, url: %s, resp: %s]", level, req.Method, req.URL.String(), bytes2str(respBody))
+	logx.WithContext(req.Context()).
+		WithDuration(timex.Since(startTime)).
+		Infof("接收响应[HTTP]:[level: %s, method: %s, url: %s, resp: %s]", level, req.Method, req.URL.String(), *(*string)(unsafe.Pointer(&respBody)))
 	if respErr != nil {
 		return nil, respErr
 	}
 	return resp, nil
-}
-
-func str2bytes(s string) []byte {
-	x := (*[2]uintptr)(unsafe.Pointer(&s))
-	h := [3]uintptr{x[0], x[1], x[1]}
-	return *(*[]byte)(unsafe.Pointer(&h))
-}
-func bytes2str(b []byte) string {
-	return *(*string)(unsafe.Pointer(&b))
 }

@@ -18,14 +18,32 @@ func UnaryLogInterceptor() grpc.UnaryServerInterceptor {
 		handler grpc.UnaryHandler) (resp interface{}, err error) {
 
 		startTime := timex.Now()
+
+		logRequest(ctx, info.FullMethod, req, timex.Since(startTime))
 		resp, err = handler(ctx, req)
-		logDuration(ctx, info.FullMethod, resp, timex.Since(startTime), err)
+		logResp(ctx, info.FullMethod, resp, timex.Since(startTime), err)
 
 		return
 	}
 }
 
-func logDuration(ctx context.Context, method string, resp interface{}, duration time.Duration, respErr error) {
+func logRequest(ctx context.Context, method string, req interface{}, duration time.Duration) {
+	var addr string
+	client, ok := peer.FromContext(ctx)
+	if ok {
+		addr = client.Addr.String()
+	}
+	content, err := json.Marshal(req)
+
+	if err != nil {
+		logx.WithContext(ctx).Errorf("%s - %s", addr, err.Error())
+	}
+
+	logx.WithContext(ctx).WithDuration(duration).Infof("接收请求[RPC]：[addr: %s - method: %s - req: %s]", addr, method, string(content))
+
+}
+
+func logResp(ctx context.Context, method string, resp interface{}, duration time.Duration, respErr error) {
 	var addr string
 	client, ok := peer.FromContext(ctx)
 	if ok {

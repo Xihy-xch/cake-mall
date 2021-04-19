@@ -5,20 +5,20 @@ import (
 	"fmt"
 
 	"cake-mall/api/internal/config"
-	"cake-mall/api/middlerware/http"
+	"cake-mall/api/middlerware/http/client"
 )
 
 type Client struct {
 	AppID     string
 	AppSecret string
-	*http.HClient
+	*client.HClient
 }
 
 func NewClient(config config.Config) *Client {
 	return &Client{
 		AppID:     config.Wechat.AppID,
 		AppSecret: config.Wechat.AppSecret,
-		HClient:   http.NewClient(config.Wechat.Host),
+		HClient:   client.NewClient(config.Wechat.Host),
 	}
 }
 

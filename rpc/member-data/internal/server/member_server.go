@@ -30,3 +30,8 @@ func (s *MemberServer) VerifyUserNumberWithPwd(ctx context.Context, in *member.V
 	l := logic.NewVerifyUserNumberWithPwdLogic(ctx, s.svcCtx)
 	return l.VerifyUserNumberWithPwd(in)
 }
+
+func (s *MemberServer) CreateUser(ctx context.Context, in *member.CreateUserRequest) (*member.CreateUserResponse, error) {
+	l := logic.NewCreateUserLogic(ctx, s.svcCtx)
+	return l.CreateUser(in)
+}

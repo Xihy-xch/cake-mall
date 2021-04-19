@@ -7,6 +7,7 @@ import (
 	"cake-mall/api/internal/config"
 	"cake-mall/api/internal/handler"
 	"cake-mall/api/internal/svc"
+	server2 "cake-mall/api/middlerware/http/server"
 
 	"github.com/tal-tech/go-zero/core/conf"
 	"github.com/tal-tech/go-zero/rest"
@@ -22,6 +23,7 @@ func main() {
 
 	ctx := svc.NewServiceContext(c)
 	server := rest.MustNewServer(c.RestConf)
+	server.Use(server2.LogServerMiddleware)
 	defer server.Stop()
 
 	handler.RegisterHandlers(server, ctx)
