@@ -1,4 +1,4 @@
-package http
+package client
 
 import (
 	"bytes"
@@ -9,6 +9,7 @@ import (
 
 	"github.com/dghubble/sling"
 	"github.com/tal-tech/go-zero/core/logx"
+	"github.com/tal-tech/go-zero/core/timex"
 )
 
 type LogDoer struct {
@@ -25,10 +26,10 @@ func (l LogDoer) Do(req *http.Request) (*http.Response, error) {
 			req.Body = ioutil.NopCloser(bytes.NewBuffer(b))
 		}
 	}
+	startTime := timex.Now()
 
 
-
-	logx.WithContext(req.Context()).Infof("发送请求[HTTP]: [method: %s, url: %s, params: %s]", req.Method, req.URL.String(), bytes2str(reqBody))
+	logx.WithContext(req.Context()).WithDuration(timex.Since(startTime)).Infof("发送请求[HTTP]: [method: %s, url: %s, params: %s]", req.Method, req.URL.String(), bytes2str(reqBody))
 
 	resp, respErr := l.doer.Do(req)
 

@@ -36,11 +36,11 @@ type (
 	}
 
 	UserPwd struct {
+		UpdateTime time.Time `db:"update_time"`
+		Id         int64     `db:"id"`       // 主键自增id
+		Number     int64     `db:"number"`   // 用户唯一number
 		Password   string    `db:"password"` // 用户密码
-		CreateTime time.Time `db:"createTime"`
-		UpdateTime time.Time `db:"updateTime"`
-		Id         int64     `db:"id"`     // 主键自增id
-		Number     int64     `db:"number"` // 用户唯一number
+		CreateTime time.Time `db:"create_time"`
 	}
 )
 
@@ -53,7 +53,7 @@ func NewUserPwdModel(conn sqlx.SqlConn, c cache.CacheConf) UserPwdModel {
 
 func (m *defaultUserPwdModel) Insert(data UserPwd) (sql.Result, error) {
 	query := fmt.Sprintf("insert into %s (%s) values (?, ?)", m.table, userPwdRowsExpectAutoSet)
-	ret, err := m.ExecNoCache(query, data.Password, data.Number)
+	ret, err := m.ExecNoCache(query, data.Number, data.Password)
 
 	return ret, err
 }
@@ -79,7 +79,7 @@ func (m *defaultUserPwdModel) Update(data UserPwd) error {
 	userPwdIdKey := fmt.Sprintf("%s%v", cacheUserPwdIdPrefix, data.Id)
 	_, err := m.Exec(func(conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, userPwdRowsWithPlaceHolder)
-		return conn.Exec(query, data.Password, data.Number, data.Id)
+		return conn.Exec(query, data.Number, data.Password, data.Id)
 	}, userPwdIdKey)
 	return err
 }

@@ -36,12 +36,12 @@ type (
 	}
 
 	WechatUser struct {
+		CreateTime time.Time `db:"create_time"`
+		UpdateTime time.Time `db:"update_time"`
+		Id         int64     `db:"id"`          // 主键自增id
+		Number     int64     `db:"number"`      // 用户唯一number
 		UnionId    string    `db:"union_id"`    // 用户微信unionId
 		SessionKey string    `db:"session_key"` // 用户微信sessionKey
-		CreateTime time.Time `db:"createTime"`
-		UpdateTime time.Time `db:"updateTime"`
-		Id         int64     `db:"id"`     // 主键自增id
-		Number     int64     `db:"number"` // 用户唯一number
 	}
 )
 
@@ -54,7 +54,7 @@ func NewWechatUserModel(conn sqlx.SqlConn, c cache.CacheConf) WechatUserModel {
 
 func (m *defaultWechatUserModel) Insert(data WechatUser) (sql.Result, error) {
 	query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?)", m.table, wechatUserRowsExpectAutoSet)
-	ret, err := m.ExecNoCache(query, data.UnionId, data.SessionKey, data.Number)
+	ret, err := m.ExecNoCache(query, data.Number, data.UnionId, data.SessionKey)
 
 	return ret, err
 }
@@ -80,7 +80,7 @@ func (m *defaultWechatUserModel) Update(data WechatUser) error {
 	wechatUserIdKey := fmt.Sprintf("%s%v", cacheWechatUserIdPrefix, data.Id)
 	_, err := m.Exec(func(conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, wechatUserRowsWithPlaceHolder)
-		return conn.Exec(query, data.UnionId, data.SessionKey, data.Number, data.Id)
+		return conn.Exec(query, data.Number, data.UnionId, data.SessionKey, data.Id)
 	}, wechatUserIdKey)
 	return err
 }
