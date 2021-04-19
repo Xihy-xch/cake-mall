@@ -28,6 +28,7 @@ type (
 		FindOne(id int64) (*WechatUser, error)
 		Update(data WechatUser) error
 		Delete(id int64) error
+		FindOneByUnionID(unionID string) (*WechatUser, error)
 	}
 
 	defaultWechatUserModel struct {
@@ -93,6 +94,20 @@ func (m *defaultWechatUserModel) Delete(id int64) error {
 		return conn.Exec(query, id)
 	}, wechatUserIdKey)
 	return err
+}
+
+func (m *defaultWechatUserModel) FindOneByUnionID(unionID string) (*WechatUser, error) {
+	var resp WechatUser
+	query := fmt.Sprintf("select %s from %s where `union_id` = ? limit 1", wechatUserRows, m.table)
+	err := m.QueryRowNoCache(&resp, query, unionID)
+	switch err {
+	case nil:
+		return &resp, nil
+	case sqlc.ErrNotFound:
+		return nil, ErrNotFound
+	default:
+		return nil, err
+	}
 }
 
 func (m *defaultWechatUserModel) formatPrimary(primary interface{}) string {

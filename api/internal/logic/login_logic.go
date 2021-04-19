@@ -10,12 +10,13 @@ import (
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/tal-tech/go-zero/core/logx"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 const (
 	pwdRight     int32 = 0
 	pwdWrong     int32 = 1
-	userNotFound int32 = 2
 )
 
 type LoginLogic struct {
@@ -39,21 +40,21 @@ func (l *LoginLogic) Login(req types.LoginRequest) (*types.LoginResponse, error)
 		Password:   req.Password,
 	})
 
+	if err != nil  && status.Code(err) == codes.NotFound{
+		return &types.LoginResponse{
+			Code: 1,
+			Msg:  "该账户不存在",
+		}, nil
+	}
+
 	if err != nil {
-		return nil, err
+		return &types.LoginResponse{}, nil
 	}
 
 	if resp.GetStatus() == pwdWrong {
 		return &types.LoginResponse{
 			Code: 1,
 			Msg:  "用户密码错误请重试",
-		}, nil
-	}
-
-	if resp.GetStatus() == userNotFound {
-		return &types.LoginResponse{
-			Code: 1,
-			Msg:  "此帐号还未注册",
 		}, nil
 	}
 

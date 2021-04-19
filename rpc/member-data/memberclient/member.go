@@ -14,12 +14,12 @@ import (
 )
 
 type (
-	CreateUserResponse                = member.CreateUserResponse
 	UpdateSessionKeyByUnionIdRequest  = member.UpdateSessionKeyByUnionIdRequest
 	UpdateSessionKeyByUnionIdResponse = member.UpdateSessionKeyByUnionIdResponse
 	VerifyUserNumberWithPwdRequest    = member.VerifyUserNumberWithPwdRequest
 	VerifyUserNumberWithPwdResponse   = member.VerifyUserNumberWithPwdResponse
 	CreateUserRequest                 = member.CreateUserRequest
+	CreateUserResponse                = member.CreateUserResponse
 
 	Member interface {
 		UpdateSessionKeyByUnionId(ctx context.Context, in *UpdateSessionKeyByUnionIdRequest) (*UpdateSessionKeyByUnionIdResponse, error)

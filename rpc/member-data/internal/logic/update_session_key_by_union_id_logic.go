@@ -5,6 +5,7 @@ import (
 
 	"cake-mall/rpc/member-data/internal/svc"
 	"cake-mall/rpc/member-data/member"
+	"cake-mall/rpc/member-data/model"
 
 	"github.com/tal-tech/go-zero/core/logx"
 )
@@ -24,7 +25,20 @@ func NewUpdateSessionKeyByUnionIdLogic(ctx context.Context, svcCtx *svc.ServiceC
 }
 
 func (l *UpdateSessionKeyByUnionIdLogic) UpdateSessionKeyByUnionId(in *member.UpdateSessionKeyByUnionIdRequest) (*member.UpdateSessionKeyByUnionIdResponse, error) {
-	// todo: add your logic here and delete this line
 
+	wechatUser, err := l.svcCtx.WechatUserModel.FindOneByUnionID(in.GetUnionId())
+
+	if err != nil {
+		return nil, err
+	}
+	err = l.svcCtx.WechatUserModel.Update(model.WechatUser{
+		Id:         wechatUser.Id,
+		Number:     wechatUser.Number,
+		UnionId:    wechatUser.UnionId,
+		SessionKey: in.GetSessionKey(),
+	})
+	if err != nil {
+		return nil, err
+	}
 	return &member.UpdateSessionKeyByUnionIdResponse{}, nil
 }

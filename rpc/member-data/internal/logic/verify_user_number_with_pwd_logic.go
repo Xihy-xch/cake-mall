@@ -8,12 +8,13 @@ import (
 
 	"github.com/tal-tech/go-zero/core/logx"
 	"github.com/tal-tech/go-zero/core/stores/sqlx"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 const (
-	pwdRight     = 0
-	pwdWrong     = 1
-	userNotFound = 2
+	pwdRight = 0
+	pwdWrong = 1
 )
 
 type VerifyUserNumberWithPwdLogic struct {
@@ -33,9 +34,7 @@ func NewVerifyUserNumberWithPwdLogic(ctx context.Context, svcCtx *svc.ServiceCon
 func (l *VerifyUserNumberWithPwdLogic) VerifyUserNumberWithPwd(in *member.VerifyUserNumberWithPwdRequest) (*member.VerifyUserNumberWithPwdResponse, error) {
 	userPwd, err := l.svcCtx.UserPwdModel.FindOne(in.GetUserNumber())
 	if err != nil && err == sqlx.ErrNotFound {
-		return &member.VerifyUserNumberWithPwdResponse{
-			Status: userNotFound,
-		}, nil
+		return nil, status.Error(codes.NotFound, err.Error())
 	}
 
 	if err != nil {
