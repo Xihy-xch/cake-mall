@@ -16,6 +16,6 @@ Wechat:
   Host: https://api.weixin.qq.com
   AppID: wxe0679df260670719
   AppSecret: 1f61870dc7fcc275e76f0ae8a0dd1909
-JwtAuth:
+Auth:
   AccessSecret: jwtSecretxxx
   AccessExpire: 604800

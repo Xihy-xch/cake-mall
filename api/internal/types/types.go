@@ -27,3 +27,26 @@ type LoginResponseData struct {
 	AccessExpire int64  `json:"access_expire"`
 	RefreshAfter int64  `json:"refresh_after"` // 建议客户端刷新token的绝对时间
 }
+
+type CreateUserRequest struct {
+	UserNumber int64  `form:"userNumber"`
+	Password   string `form:"password"`
+	Mobile     string `form:"mobile"`
+	UserName   string `form:"userName"`
+}
+
+type CreateUserResponse struct {
+	Code int32  `json:"code"`
+	Msg  string `json:"msg"`
+	Data string `json:"data"`
+}
+
+type CreateOrderRequest struct {
+	OrderNumber int64 `json:"orderNumber""`
+}
+
+type CreateOrderResponse struct {
+	Code int32  `json:"code"`
+	Msg  string `json:"msg"`
+	Data string `json:"data"`
+}

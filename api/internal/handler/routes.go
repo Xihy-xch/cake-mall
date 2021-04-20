@@ -4,6 +4,8 @@ package handler
 import (
 	"net/http"
 
+	member "cake-mall/api/internal/handler/member"
+	order "cake-mall/api/internal/handler/order"
 	"cake-mall/api/internal/svc"
 
 	"github.com/tal-tech/go-zero/rest"
@@ -14,14 +16,30 @@ func RegisterHandlers(engine *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				Method:  http.MethodGet,
-				Path:    "/members/updateWechatSessionKey",
-				Handler: updateWechatSessionKeyHandler(serverCtx),
+				Path:    "/member/updateWechatSessionKey",
+				Handler: member.UpdateWechatSessionKeyHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
-				Path:    "/members/login",
-				Handler: LoginHandler(serverCtx),
+				Path:    "/member/login",
+				Handler: member.LoginHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/member/createUser",
+				Handler: member.CreateUserHandler(serverCtx),
 			},
 		},
+	)
+
+	engine.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/order/createOrder",
+				Handler: order.CreateOrderHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
 	)
 }

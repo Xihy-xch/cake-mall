@@ -23,6 +23,7 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		UserPwdModel:    model.NewUserPwdModel(sqlx.NewMysql(c.DB.Member), c.Cache),
 		WechatUserModel: model.NewWechatUserModel(sqlx.NewMysql(c.DB.Member), c.Cache),
 		IDGenerator:     NewIDGenerator(),
+		UserModel:       model.NewUserModel(sqlx.NewMysql(c.DB.Member), c.Cache),
 	}
 }
 
@@ -38,6 +39,6 @@ func NewIDGenerator() *IDGenerator {
 	return &IDGenerator{sf}
 }
 
-func (i *IDGenerator) GetID() int64 {
+func (i *IDGenerator) GetNumber() int64 {
 	return i.NextVal()
 }

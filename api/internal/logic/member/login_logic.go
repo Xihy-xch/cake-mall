@@ -48,7 +48,7 @@ func (l *LoginLogic) Login(req types.LoginRequest) (*types.LoginResponse, error)
 	}
 
 	if err != nil {
-		return &types.LoginResponse{}, nil
+		return &types.LoginResponse{}, err
 	}
 
 	if resp.GetStatus() == pwdWrong {
@@ -64,8 +64,8 @@ func (l *LoginLogic) Login(req types.LoginRequest) (*types.LoginResponse, error)
 func (l *LoginLogic) generateToken(userNumber int64) (*types.LoginResponse, error) {
 
 	iat := time.Now().Unix()
-	secretKey := l.svcCtx.Config.JwtAuth.AccessSecret
-	accessExpire := l.svcCtx.Config.JwtAuth.AccessExpire
+	secretKey := l.svcCtx.Config.Auth.AccessSecret
+	accessExpire := l.svcCtx.Config.Auth.AccessExpire
 	payloads := make(map[string]interface{}, 1)
 	payloads["user_number"] = userNumber
 

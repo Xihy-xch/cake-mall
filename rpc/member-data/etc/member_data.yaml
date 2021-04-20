@@ -11,6 +11,6 @@ Etcd:
     - 127.0.0.1:2379
   Key: memberdata.rpc
 DB:
-  member: root:root@tcp(localhost:3306)/cake_mall_member
+  member: root:root@tcp(localhost:3306)/cake_mall_member?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
 Cache:
   - Host: localhost:6379

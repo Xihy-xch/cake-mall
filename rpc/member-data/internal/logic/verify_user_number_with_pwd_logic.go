@@ -32,7 +32,7 @@ func NewVerifyUserNumberWithPwdLogic(ctx context.Context, svcCtx *svc.ServiceCon
 }
 
 func (l *VerifyUserNumberWithPwdLogic) VerifyUserNumberWithPwd(in *member.VerifyUserNumberWithPwdRequest) (*member.VerifyUserNumberWithPwdResponse, error) {
-	userPwd, err := l.svcCtx.UserPwdModel.FindOne(in.GetUserNumber())
+	userPwd, err := l.svcCtx.UserPwdModel.FindOneByNumber(in.GetUserNumber())
 	if err != nil && err == sqlx.ErrNotFound {
 		return nil, status.Error(codes.NotFound, err.Error())
 	}

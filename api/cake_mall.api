@@ -34,12 +34,54 @@ type (
 		AccessExpire int64  `json:"access_expire"`
 		RefreshAfter int64  `json:"refresh_after"` // 建议客户端刷新token的绝对时间
 	}
+
+	CreateUserRequest {
+		UserNumber int64  `form:"userNumber"`
+		Password   string `form:"password"`
+		Mobile     string `form:"mobile"`
+		UserName   string `form:"userName"`
+	}
+
+	CreateUserResponse {
+		Code int32  `json:"code"`
+		Msg  string `json:"msg"`
+		Data string `json:"data"`
+	}
+)
+
+@server(
+	group: member
 )
 
 service cake_mall_api {
 	@handler updateWechatSessionKeyHandler
-	get /members/updateWechatSessionKey (UpdateWechatSessionKeyRequest) returns (UpdateWechatSessionKeyResponse)
+	get /member/updateWechatSessionKey (UpdateWechatSessionKeyRequest) returns (UpdateWechatSessionKeyResponse)
 	
 	@handler LoginHandler
-	post /members/login (LoginRequest) returns (LoginResponse)
+	post /member/login (LoginRequest) returns (LoginResponse)
+	
+	@handler createUserHandler
+	post /member/createUser (CreateUserRequest) returns (CreateUserResponse)
+}
+
+type (
+	CreateOrderRequest {
+		OrderNumber int64 `json:"orderNumber""`
+	}
+
+	CreateOrderResponse {
+		Code int32  `json:"code"`
+		Msg  string `json:"msg"`
+		Data string `json:"data"`
+	}
+)
+
+@server(
+	jwt: Auth
+	group: order
+)
+
+service cake_mall_api {
+	@handler createOrderHandler
+	post /order/createOrder (CreateOrderRequest) returns (CreateOrderResponse)
 }
