@@ -2,12 +2,17 @@ package logic
 
 import (
 	"context"
+	"fmt"
+	"strings"
 
 	"cake-mall/rpc/member-data/internal/svc"
 	"cake-mall/rpc/member-data/member"
 	"cake-mall/rpc/member-data/model"
 
 	"github.com/tal-tech/go-zero/core/logx"
+	"github.com/tal-tech/go-zero/core/stores/sqlx"
+	"github.com/tal-tech/go-zero/core/stringx"
+	"github.com/tal-tech/go-zero/tools/goctl/model/sql/builderx"
 )
 
 type CreateUserLogic struct {
@@ -28,19 +33,30 @@ func (l *CreateUserLogic) CreateUser(in *member.CreateUserRequest) (*member.Crea
 	if in.GetUserNumber() == 0 {
 		in.UserNumber = l.svcCtx.IDGenerator.GetNumber()
 	}
-	//Todo 事物操作数据
-	_, err := l.svcCtx.UserModel.Insert(model.User{
-		Number:     in.GetUserNumber(),
-		UserName:   in.GetUserName(),
-		Mobile:     in.GetMobile(),
+	conn := sqlx.NewMysql(l.svcCtx.Config.DB.Member)
+
+	err := conn.Transact(func(session sqlx.Session) error {
+
+		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?)", "`user`",
+			strings.Join(stringx.Remove(builderx.RawFieldNames(&model.User{}), "`id`", "`create_time`", "`update_time`"), ","))
+		_, err := session.Exec(query, in.GetUserNumber(), in.GetUserName(), in.Mobile)
+		if err != nil {
+			return err
+		}
+
+		query = fmt.Sprintf("insert into %s (%s) values (?, ?)", "`user_pwd`",
+			strings.Join(stringx.Remove(builderx.RawFieldNames(&model.UserPwd{}), "`id`", "`create_time`", "`update_time`"), ","))
+		_, err = session.Exec(query, in.GetUserNumber(), in.GetPassword())
+		if err != nil {
+			return err
+		}
+
+		return nil
 	})
+
 	if err != nil {
 		return nil, err
 	}
-	_, err = l.svcCtx.UserPwdModel.Insert(model.UserPwd{
-		Number:   in.GetUserNumber(),
-		Password: in.GetPassword(),
-	})
 
 	return &member.CreateUserResponse{}, nil
 }
