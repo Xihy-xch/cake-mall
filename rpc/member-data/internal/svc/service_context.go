@@ -2,7 +2,7 @@ package svc
 
 import (
 	"cake-mall/rpc/member-data/internal/config"
-	"cake-mall/rpc/member-data/model"
+	"cake-mall/rpc/member-data/internal/model"
 
 	"github.com/GUAIK-ORG/go-snowflake/snowflake"
 	"github.com/tal-tech/go-zero/core/logx"

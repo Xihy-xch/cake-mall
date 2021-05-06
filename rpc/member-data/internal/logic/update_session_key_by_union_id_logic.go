@@ -3,9 +3,9 @@ package logic
 import (
 	"context"
 
+	"cake-mall/rpc/member-data/internal/model"
 	"cake-mall/rpc/member-data/internal/svc"
 	"cake-mall/rpc/member-data/member"
-	"cake-mall/rpc/member-data/model"
 
 	"github.com/tal-tech/go-zero/core/logx"
 )
