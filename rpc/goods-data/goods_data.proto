@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package goods ;
+
+
+service goods {
+  rpc createGoodsSPU (createGoodsSPURequest) returns (createGoodsSPUResponse);
+  rpc createGoodsSKU (createGoodsSKURequest) returns (createGoodsSKUResponse);
+}
+
+message toppings {
+  int64 id     = 1;
+  string name  = 2;
+  int64 status = 3;
+  double price = 4;
+}
+
+message createGoodsSPURequest {
+  string name                = 1;
+  string description         = 2;
+  int32 kind                 = 3;
+  string imgURL              = 4;
+  int32 status               = 5;
+  repeated int64 toppingsID = 6;
+}
+
+message createGoodsSPUResponse {
+}
+
+message createGoodsSKURequest {
+  int64 spuID          = 1;
+  double currentPrice  = 2;
+  double originalPrice = 3;
+  int32 size           = 4;
+}
+
+message createGoodsSKUResponse {
+
+}
+
+
